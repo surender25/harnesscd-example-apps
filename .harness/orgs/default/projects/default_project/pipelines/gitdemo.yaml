@@ -1,0 +1,40 @@
+pipeline:
+  name: gitdemo
+  identifier: gitdemo
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: connector
+        repoName: <+input>
+        build: <+input>
+  stages:
+    - stage:
+        name: demo
+        identifier: demo
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          platform:
+            os: Linux
+            arch: Arm64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: <+input>
+                    shell: Sh
+                    command: echo "hello world"
